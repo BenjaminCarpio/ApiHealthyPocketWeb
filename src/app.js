@@ -1,15 +1,24 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors"; // Importa el paquete cors
+import helmet from 'helmet';
 
 const app = express();
-
+//const helmet = require('helmet');
 // Middlewares
 app.use(morgan("dev"));
 app.use(express.json());
 
 // Configuración de CORS
 app.use(cors({ origin: "http://localhost:3000" }));
+
+app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        'upgrade-insecure-requests': [],
+      },
+    })
+  );
 
 // Importa tus rutas
 import UserRoutes from "./routes/UserRoutes.js";
